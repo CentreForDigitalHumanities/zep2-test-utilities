@@ -1,0 +1,6 @@
+
+
+start() {
+    println("Test");
+    terminate;
+}
