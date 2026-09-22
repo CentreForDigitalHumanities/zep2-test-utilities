@@ -4,7 +4,7 @@ plugin zep_display;
 
 string ignore_list = "";
 
-// This fails badly with more than 10 monitors
+// This fails badly with more than 10 heads 
 bool is_ignored(int head) {
     string h = string(head);
     println("h = " + h + "\t ignore_list = " + ignore_list);
