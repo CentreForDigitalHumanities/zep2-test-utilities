@@ -1,6 +1,389 @@
+// Zep test script: window1
+
+plugin zep_display;
+
+string ignore_list = "";
+
+// This fails badly with more than 10 monitors
+bool is_ignored(int head) {
+    string h = string(head);
+    println("h = " + h + "\t ignore_list = " + ignore_list);
+    if (find_key(ignore_list, h, 0) >= 0) {
+        return true;
+    }
+    return false;
+}
+
+init()
+{
+    // If this is skipped, the first window to be shown will open the
+    // display_device in the fly. However, we want to show information
+    // about the display therefore we open it explicitly here.
+    string IGNORE="ignore-heads";
+    string I="i";
+
+    println("have_option(IGNORE) = " + option_value(IGNORE)); 
+    println("have_option(I) = " + option_value(I)); 
+
+    if (have_option(IGNORE))
+        ignore_list = option_value(IGNORE);
+    if (have_option(I) && !have_option(IGNORE))
+        ignore_list = option_value("I");
+    
+    println("ignore_list = " + ignore_list); 
+
+    display_device.open();
+    if (error())
+        terminate;
+    
+}
 
 
-start() {
-    println("Test");
-    terminate;
+void dumpInfo(Display d)
+{
+    println("desktop:");
+    println("  width:  " + d.width);
+    println("  height: " + d.height);
+    println("  heads:  " + d.num_heads);
+
+    int n = 0;
+    while (n < d.num_heads)
+    {
+        println("head " + n + ":");
+        println("  width:  " + d.head_width[n]);
+        println("  height: " + d.head_height[n]);
+        println("  x-orig: " + d.head_origin_x[n]);
+        println("  y-orig: " + d.head_origin_y[n]);
+//        println("  rate:   " + d.refresh_rate[n] + "Hz");
+        n++;
+    }
+}
+
+
+NormalWindow win0
+{
+    int head = 0;
+
+    Page page {
+        init () {
+            fill_pattern_color = rgbi:0/0/0;
+        }
+
+        CanvasGadget canvas {
+
+            init() {
+                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
+            }
+
+            on_event:resize() {
+                // Draw Canvas content with respect to the origin
+                offset_x = actual_width/2;
+                offset_y = actual_height/2;
+            }
+
+            TextShape text {
+
+                init() {
+                    line_pattern_color= rgbi:255/255/255;
+                    text = "Head: " + head;
+                    is_visible = true;
+                    font_size = 100;
+                    offset_x = -this.string_width(this.text)/2.0;
+                    offset_y = -this.string_height(this.text)/2.0;
+                }
+            }
+        }
+    }
+
+    close() {
+        terminate;
+    }
+
+    init()
+    {
+        title = "window demo " + head;
+        size = 800, 600;
+        alignment = ALIGN_CENTER, ALIGN_CENTER;
+        target_head = head;
+
+        if (head < display_device.num_heads && !is_ignored(head)) {
+            show();
+            show_page(page, event_time + dur(1.0/60));
+        }
+    }
+}
+
+NormalWindow win1
+{
+    int head = 1;
+
+    Page page {
+        init () {
+            fill_pattern_color = rgbi:0/0/0;
+        }
+
+        CanvasGadget canvas {
+
+            init() {
+                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
+            }
+
+            on_event:resize() {
+                // Draw Canvas content with respect to the origin
+                offset_x = actual_width/2;
+                offset_y = actual_height/2;
+            }
+
+            TextShape text {
+
+                init() {
+                    line_pattern_color= rgbi:255/255/255;
+                    text = "Head: " + head;
+                    is_visible = true;
+                    font_size = 100;
+                    offset_x = -this.string_width(this.text)/2.0;
+                    offset_y = -this.string_height(this.text)/2.0;
+                }
+            }
+        }
+    }
+
+    close() {
+        terminate;
+    }
+
+    init()
+    {
+        title = "window demo " + head;
+        size = 800, 600;
+        alignment = ALIGN_CENTER, ALIGN_CENTER;
+        target_head = head;
+
+        if (head < display_device.num_heads && !is_ignored(head)) {
+            show();
+            show_page(page, event_time + dur(1.0/60));
+        }
+    }
+}
+
+NormalWindow win2
+{
+    int head = 2;
+
+    Page page {
+        init () {
+            fill_pattern_color = rgbi:0/0/0;
+        }
+
+        CanvasGadget canvas {
+
+            init() {
+                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
+            }
+
+            on_event:resize() {
+                // Draw Canvas content with respect to the origin
+                offset_x = actual_width/2;
+                offset_y = actual_height/2;
+            }
+
+            TextShape text {
+
+                init() {
+                    line_pattern_color= rgbi:255/255/255;
+                    text = "Head: " + head;
+                    is_visible = true;
+                    font_size = 100;
+                    offset_x = -this.string_width(this.text)/2.0;
+                    offset_y = -this.string_height(this.text)/2.0;
+                }
+            }
+        }
+    }
+
+    close() {
+        terminate;
+    }
+
+    init()
+    {
+        title = "window demo " + head;
+        size = 800, 600;
+        alignment = ALIGN_CENTER, ALIGN_CENTER;
+        target_head = head;
+
+        if (head < display_device.num_heads && !is_ignored(head)) {
+            show();
+            show_page(page, event_time + dur(1.0/60));
+        }
+    }
+}
+
+NormalWindow win3
+{
+    int head = 3;
+
+    Page page {
+        init () {
+            fill_pattern_color = rgbi:0/0/0;
+        }
+
+        CanvasGadget canvas {
+
+            init() {
+                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
+            }
+
+            on_event:resize() {
+                // Draw Canvas content with respect to the origin
+                offset_x = actual_width/2;
+                offset_y = actual_height/2;
+            }
+
+            TextShape text {
+
+                init() {
+                    line_pattern_color= rgbi:255/255/255;
+                    text = "Head: " + head;
+                    is_visible = true;
+                    font_size = 100;
+                    offset_x = -this.string_width(this.text)/2.0;
+                    offset_y = -this.string_height(this.text)/2.0;
+                }
+            }
+        }
+    }
+
+    close() {
+        terminate;
+    }
+
+    init()
+    {
+        title = "window demo " + head;
+        size = 800, 600;
+        alignment = ALIGN_CENTER, ALIGN_CENTER;
+        target_head = head;
+
+        if (head < display_device.num_heads && !is_ignored(head)) {
+            show();
+            show_page(page, event_time + dur(1.0/60));
+        }
+    }
+}
+
+NormalWindow win4
+{
+    int head = 4;
+
+    Page page {
+        init () {
+            fill_pattern_color = rgbi:0/0/0;
+        }
+
+        CanvasGadget canvas {
+
+            init() {
+                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
+            }
+
+            on_event:resize() {
+                // Draw Canvas content with respect to the origin
+                offset_x = actual_width/2;
+                offset_y = actual_height/2;
+            }
+
+            TextShape text {
+
+                init() {
+                    line_pattern_color= rgbi:255/255/255;
+                    text = "Head: " + head;
+                    is_visible = true;
+                    font_size = 100;
+                    offset_x = -this.string_width(this.text)/2.0;
+                    offset_y = -this.string_height(this.text)/2.0;
+                }
+            }
+        }
+    }
+
+    close() {
+        terminate;
+    }
+
+    init()
+    {
+        title = "window demo " + head;
+        size = 800, 600;
+        alignment = ALIGN_CENTER, ALIGN_CENTER;
+        target_head = head;
+
+        if (head < display_device.num_heads && !is_ignored(head)) {
+            show();
+            show_page(page, event_time + dur(1.0/60));
+        }
+    }
+}
+
+NormalWindow win5
+{
+    int head = 5;
+
+    Page page {
+        init () {
+            fill_pattern_color = rgbi:0/0/0;
+        }
+
+        CanvasGadget canvas {
+
+            init() {
+                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
+            }
+
+            on_event:resize() {
+                // Draw Canvas content with respect to the origin
+                offset_x = actual_width/2;
+                offset_y = actual_height/2;
+            }
+
+            TextShape text {
+                init() {
+                    line_pattern_color= rgbi:255/255/255;
+                    text = "Head: " + head;
+                    is_visible = true;
+                    font_size = 100;
+                    offset_x = -this.string_width(this.text)/2.0;
+                    offset_y = -this.string_height(this.text)/2.0;
+                }
+            }
+        }
+    }
+
+    close() {
+        terminate;
+    }
+
+    init()
+    {
+        title = "window demo " + head;
+        size = 800, 600;
+        alignment = ALIGN_CENTER, ALIGN_CENTER;
+        target_head = head;
+
+        if (head < display_device.num_heads && !is_ignored(head)) {
+            show();
+            show_page(page, event_time + dur(1.0/60));
+        }
+    }
+}
+
+
+start()
+{
+    println("Demo: Window event handling.");
+    println("Use keyboard and mouse to interact with window.");
+    println();
+
+    dumpInfo(display_device);
+    println();
 }
