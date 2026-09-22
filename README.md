@@ -8,11 +8,11 @@ heads at the moment).
 
 This script makes it possible to ignore setting a window on certain heads.
 
-e.g.
+e.g. head 2 or head 2 and 3 can be ignored using the following commands
 ```bash
 zep-2.7 enummonitors.zp --i 2
 zep-2.7 enummonitors.zp --ignore-heads 23
 ```
 
-One of the short commings of zep is that it doesn't display which head is the primary.
+One of the short comings of zep is that it doesn't display which head is the primary.
 
