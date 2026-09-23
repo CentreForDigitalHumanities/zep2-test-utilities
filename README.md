@@ -20,7 +20,7 @@ want to display a window. This might be useful when displays are cloned for exam
 The clone will display a window anyway, and a second might make stuff more difficult.
 Commandline option parsing is not straightforward with zep, so 23 means monitors two
 and three. The option value just takes a string, and when the head number (as string)
-is present in the option_value of --i the head will be ignored.
+is present in the option\_value of --i the head will be ignored.
 So when having more than 10 monitors, option parsing will likely have some need
 of tender care.
 
@@ -45,6 +45,7 @@ Since you probably want to specify the sound card/interface and the number of ch
 
 So in order to run a sound on 4 different channels on the motu M6 given the following
 output of zepsndinfo:
+
 ```bash
 $ zepsndinfo
 Sound system ALSA:
@@ -75,6 +76,7 @@ Sound system ALSA:
 ```
 
 You would have to run the command as:
+
 ```bash
 $zep zepsound.zp --d=5 --n=4
 ```

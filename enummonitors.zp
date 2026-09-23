@@ -7,7 +7,6 @@ string ignore_list = "";
 // This fails badly with more than 10 heads 
 bool is_ignored(int head) {
     string h = string(head);
-    println("h = " + h + "\t ignore_list = " + ignore_list);
     if (find_key(ignore_list, h, 0) >= 0) {
         return true;
     }
@@ -22,16 +21,11 @@ init()
     string IGNORE="ignore-heads";
     string I="i";
 
-    println("have_option(IGNORE) = " + option_value(IGNORE)); 
-    println("have_option(I) = " + option_value(I)); 
-
     if (have_option(IGNORE))
         ignore_list = option_value(IGNORE);
     if (have_option(I) && !have_option(IGNORE))
         ignore_list = option_value("I");
     
-    println("ignore_list = " + ignore_list); 
-
     display_device.open();
     if (error())
         terminate;
@@ -70,10 +64,6 @@ NormalWindow win0
         }
 
         CanvasGadget canvas {
-
-            init() {
-                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
-            }
 
             on_event:resize() {
                 // Draw Canvas content with respect to the origin
@@ -124,10 +114,6 @@ NormalWindow win1
 
         CanvasGadget canvas {
 
-            init() {
-                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
-            }
-
             on_event:resize() {
                 // Draw Canvas content with respect to the origin
                 offset_x = actual_width/2;
@@ -176,10 +162,6 @@ NormalWindow win2
         }
 
         CanvasGadget canvas {
-
-            init() {
-                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
-            }
 
             on_event:resize() {
                 // Draw Canvas content with respect to the origin
@@ -230,10 +212,6 @@ NormalWindow win3
 
         CanvasGadget canvas {
 
-            init() {
-                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
-            }
-
             on_event:resize() {
                 // Draw Canvas content with respect to the origin
                 offset_x = actual_width/2;
@@ -282,10 +260,6 @@ NormalWindow win4
         }
 
         CanvasGadget canvas {
-
-            init() {
-                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
-            }
 
             on_event:resize() {
                 // Draw Canvas content with respect to the origin
@@ -336,10 +310,6 @@ NormalWindow win5
 
         CanvasGadget canvas {
 
-            init() {
-                println("Page width = " + page.width+ "\tcanvas width = " + this.width);
-            }
-
             on_event:resize() {
                 // Draw Canvas content with respect to the origin
                 offset_x = actual_width/2;
@@ -380,10 +350,6 @@ NormalWindow win5
 
 start()
 {
-    println("Demo: Window event handling.");
-    println("Use keyboard and mouse to interact with window.");
-    println();
-
     dumpInfo(display_device);
     println();
 }
