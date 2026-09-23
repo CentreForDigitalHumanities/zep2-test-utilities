@@ -75,7 +75,7 @@ SoundPlayback playback
 
         int i;
         while (i < num_channels) {
-            print("" + i + " " + scaling[i] + "\t");
+            print("channel " + i + ": " + scaling[i] + "\t");
             i++;
         }
         println();
@@ -120,5 +120,5 @@ SoundPlayback playback
 start()
 {
     // The motu seems slow to start...
-    playback.play(event_time + 3s);
+    playback.play(event_time + 5s);
 }
