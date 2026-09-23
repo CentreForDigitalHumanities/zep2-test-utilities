@@ -40,7 +40,7 @@ following channels where "n" is the nth channel.
 Since you probably want to specify the sound card/interface and the number of channels
 (up to 10 channels are supported 0-9) you want to consider the following options:
 
-- `--d` or `--device`` to specify wich device you want to use
+- `--d` or `--device` to specify wich device you want to use
 - `--n` or `--num-channels` to specify the number of channels you want to use.
 
 So in order to run a sound on 4 different channels on the motu M6 given the following
@@ -79,5 +79,5 @@ You would have to run the command as:
 $zep zepsound.zp --d=5 --n=4
 ```
 
-** Note:** The motu channels are 1 indexed, we use 0 indexed values as those
+**Note:** The motu channels are 1 indexed, we use 0 indexed values as those
 are used by the zep programming language
