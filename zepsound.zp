@@ -1,0 +1,124 @@
+
+plugin zep_sound;
+
+const string DEVICE = "device";
+const string D = "d";
+const string CHANNELS = "num-channels";
+const string C = "n";
+
+int device_num = -1;
+int option_num_channels = 1;
+
+init() {
+    if (have_option(DEVICE)) {
+        device_num = int(option_value(DEVICE));
+    }
+    if (have_option(D)) {
+        device_num = int(option_value(D));
+    }
+    if (have_option(CHANNELS)) {
+        option_num_channels = int(option_value(CHANNELS));
+    }
+    if (have_option(C)) {
+        option_num_channels = int(option_value(C));
+    }
+}
+
+SoundPlaybackDevice sound_output_device
+{
+    init()
+    {
+        println("Opening device " + device_num);
+        println("Opening num_channels = " + option_num_channels + " 48000 hz ");
+        open(option_num_channels, 48000, device_num, 0ms);
+        if (error()) terminate;
+    }
+}
+
+
+SoundPlayback playback
+{
+    int nth_channel;
+
+    init()
+    {
+        nth_channel = 0;
+        device = sound_output_device;
+        num_channels = option_num_channels;
+        scaling_all = 1.0;
+    }
+
+    SoundFile clip
+    {
+        init()
+        {
+            file = "./sounds/zero.wav";
+        }
+    }
+
+    finish() {
+        println("Sound finished");
+        nth_channel = nth_channel + 1;
+        if (nth_channel >= option_num_channels) {
+            terminate;
+        }
+        else {
+           play(event_time + 1s);
+        }
+    }
+
+    void play(time t) {
+        string dir = "./sounds/";
+
+        scaling_all = 0.0; // silence all channels
+        scaling[this.nth_channel] = 1.0; // make nth_channel audible.
+
+        int i;
+        while (i < num_channels) {
+            print("" + i + " " + scaling[i] + "\t");
+            i++;
+        }
+        println();
+
+        println("nth_channel = " + this.nth_channel);
+
+        if (nth_channel == 0) {
+            clip.file = dir + "zero.wav";
+        }
+        else if (nth_channel == 1){
+            clip.file = dir + "one.wav";
+        }
+        else if (nth_channel == 2){
+            clip.file = dir + "two.wav";
+        }
+        else if (nth_channel == 3){
+            clip.file = dir + "three.wav";
+        }
+        else if (nth_channel == 4){
+            clip.file = dir + "four.wav";
+        }
+        else if (nth_channel == 5){
+            clip.file = dir + "five.wav";
+        }
+        else if (nth_channel == 6){
+            clip.file = dir + "six.wav";
+        }
+        else if (nth_channel == 7){
+            clip.file = dir + "seven.wav";
+        }
+        else if (nth_channel == 8){
+            clip.file = dir + "eight.wav";
+        }
+        else if (nth_channel == 9){
+            clip.file = dir + "nine.wav";
+        }
+        playback.start(t);
+    }
+}
+
+
+start()
+{
+    // The motu seems slow to start...
+    playback.play(event_time + 3s);
+}
