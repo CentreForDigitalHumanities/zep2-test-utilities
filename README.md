@@ -40,8 +40,16 @@ following channels where "n" is the nth channel.
 Since you probably want to specify the sound card/interface and the number of channels
 (up to 10 channels are supported 0-9) you want to consider the following options:
 
-- `--d` or `--device` to specify wich device you want to use
-- `--n` or `--num-channels` to specify the number of channels you want to use.
+- `--d=n` or `--device=n` to specify which device you want to use
+- `--n=n` or `--num-channels=n` to specify the number of channels you want to use.
+
+in both cases n should be a int, the nth device or n count of channels to address.
+
+Another option the script takes is the number of time you want to loop through
+all of the channels (2 by default).
+
+- `--l=4` or `--loopcount=4` to specify the number times you want to loop through
+  all the channels.
 
 So in order to run a sound on 4 different channels on the motu M6 given the following
 output of zepsndinfo:

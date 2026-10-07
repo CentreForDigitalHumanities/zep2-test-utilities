@@ -1,26 +1,47 @@
 
 plugin zep_sound;
 
+// which sounddevice to use
 const string DEVICE = "device";
 const string D = "d";
+
+// The number of channels to use
 const string CHANNELS = "num-channels";
 const string C = "n";
+
+// The number of loops if negative pretty much infinitive
+const string L = "l";
+const string LC = "loopcount";
 
 int device_num = -1;
 int option_num_channels = 1;
 
+int num_loops = 2;
+
 init() {
+
+    // The desired sound device
     if (have_option(DEVICE)) {
         device_num = int(option_value(DEVICE));
     }
     if (have_option(D)) {
         device_num = int(option_value(D));
     }
+
+    // The number of channels
     if (have_option(CHANNELS)) {
         option_num_channels = int(option_value(CHANNELS));
     }
     if (have_option(C)) {
         option_num_channels = int(option_value(C));
+    }
+
+    // The number of times you want to go through the channels.
+    if (have_option(L)) {
+        num_loops = int(option_value(L));
+    }
+    if (have_option(LC)) {
+        num_loops = int(option_value(LC));
     }
 }
 
@@ -39,10 +60,12 @@ SoundPlaybackDevice sound_output_device
 SoundPlayback playback
 {
     int nth_channel;
+    int nth_loop;
 
     init()
     {
         nth_channel = 0;
+        nth_loop = 0;
         device = sound_output_device;
         num_channels = option_num_channels;
         scaling_all = 1.0;
@@ -60,11 +83,12 @@ SoundPlayback playback
         println("Sound finished");
         nth_channel = nth_channel + 1;
         if (nth_channel >= option_num_channels) {
-            terminate;
+            nth_channel = 0;
+            nth_loop = nth_loop + 1;
+            if (nth_loop == num_loops)
+                terminate;
         }
-        else {
-           play(event_time + 1s);
-        }
+       play(event_time + 1s);
     }
 
     void play(time t) {
